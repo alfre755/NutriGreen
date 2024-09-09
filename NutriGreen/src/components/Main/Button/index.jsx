@@ -17,11 +17,12 @@ const ButtonStyle = styled.section`
 
   &.type1 {
     border-radius: 20px;
-    padding: 0.5em;
+    padding: 1em;
     background-color: ${(props) => props.theme.colors.primary};
 
     & :hover {
       box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.16);
+      scale: calc();
     }
   }
 `;
