@@ -4,17 +4,17 @@ const theme = {
   aspect: null,
   colors: {
     BW0: "#fff", // Blanco
-    BW1: "#252525", // Casi negro
-    BW2: "#707070", // Gris oscuro
+    BW1: "#0d0d0d", // Casi negro utilizado en las letras
+    BW2: "#0e0e0e", // Casi negro utilizado en el fondo
     BW3: "#858585", // Gris claro
     BW4: "#b4b4b4",
     BW5: "#DBDBDB", //Gris intermedio
     BW6: "#F5F5F5", //Gris mas claro, utilizado de fondo
     buttonUnderline: "#1269CE", //Azul utilizado para subrayan botones
-    primary: "#006F73", // Azul oscuro
+    primary: "#8bb235", // Verde utilizado en las letras
     primary1: Color("#006F73").lightness(73).desaturate(0.545).toString(),
     primary2: Color("#006F73").lightness(90).desaturate(0.545).toString(),
-    secondary: "#99AF0E", // Azul intenso
+    secondary: "#8cb336", // Verde un poco mas intenso utilizado en bordes
     secondary1: Color("#99AF0E").lightness(83).desaturate(0.1).toString(),
     secondary2: Color("#99AF0E").lightness(90).desaturate(0.1).toString(),
     error: "rgba(176, 0, 0)", // Rojo

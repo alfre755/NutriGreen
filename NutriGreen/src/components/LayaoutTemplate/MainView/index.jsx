@@ -11,140 +11,23 @@ import "@fontsource/roboto/700.css";
 const MainViewStyle = styled.section`
   display: flex;
   flex-direction: column;
-  min-height: 95vh;
+  min-height: 100vh; /* Asegura que el contenedor ocupe todo el alto de la ventana */
 
-  html,
-  body,
-  div,
-  span,
-  applet,
-  object,
-  iframe,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  blockquote,
-  pre,
-  a,
-  abbr,
-  acronym,
-  address,
-  big,
-  cite,
-  code,
-  del,
-  dfn,
-  em,
-  img,
-  ins,
-  kbd,
-  q,
-  s,
-  samp,
-  small,
-  strike,
-  strong,
-  sub,
-  sup,
-  tt,
-  var,
-  b,
-  u,
-  i,
-  center,
-  dl,
-  dt,
-  dd,
-  ol,
-  ul,
-  li,
-  fieldset,
-  form,
-  label,
-  legend,
-  table,
-  caption,
-  tbody,
-  tfoot,
-  thead,
-  tr,
-  th,
-  td,
-  article,
-  aside,
-  canvas,
-  details,
-  embed,
-  figure,
-  figcaption,
-  footer,
-  header,
-  hgroup,
-  menu,
-  nav,
-  output,
-  ruby,
-  section,
-  summary,
-  time,
-  mark,
-  audio,
-  video {
+  * {
     margin: 0;
     padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-  }
-  /* HTML5 display-role reset for older browsers */
-  article,
-  aside,
-  details,
-  figcaption,
-  figure,
-  footer,
-  header,
-  hgroup,
-  menu,
-  nav,
-  section {
-    display: block;
-  }
-  body {
-    line-height: 1;
-  }
-  ol,
-  ul {
     list-style: none;
-  }
-  blockquote,
-  q {
-    quotes: none;
-  }
-  blockquote:before,
-  blockquote:after,
-  q:before,
-  q:after {
-    content: "";
-    content: none;
-  }
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
+    text-decoration: none;
+    border: none;
   }
 
-  & main {
-    flex: 1;
+  main {
+    flex: 1; /* El contenido ocupará el espacio restante */
     padding: 2vmax;
   }
 
-  & footer {
-    flex-shrink: 0;
+  footer {
+    flex-shrink: 0; /* Evita que el footer se comprima */
   }
 `;
 
@@ -160,6 +43,8 @@ function MainView({ children }) {
   );
 }
 
-MainView.propTypes = {};
+MainView.propTypes = {
+  children: PropTypes.node,
+};
 
 export default MainView;

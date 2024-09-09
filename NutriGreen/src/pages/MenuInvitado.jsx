@@ -13,7 +13,25 @@ function MenuInvitado(props) {
 
   const dataExampleListar = [
     {
-      _id: 1,
+      _id: "1",
+      title: "Fajita",
+      image: imageContentWhitImage,
+      precio: "$20.000",
+    },
+    {
+      _id: "2",
+      title: "Fajita",
+      image: imageContentWhitImage,
+      precio: "$20.000",
+    },
+    {
+      _id: "3",
+      title: "Fajita",
+      image: imageContentWhitImage,
+      precio: "$20.000",
+    },
+    {
+      _id: "4",
       title: "Fajita",
       image: imageContentWhitImage,
       precio: "$20.000",
@@ -35,7 +53,14 @@ function MenuInvitado(props) {
         }}
       />
       <ListarDocumentosConImagen
-        {...{ title: "Productos Destacados", data: dataExampleListar }}
+        {...{
+          title: "Productos Destacados",
+          data: dataExampleListar,
+          buttonConfig: [
+            { type: 1, label: "Ver planes", onClick: () => {} },
+            { type: 1, label: "Ir a comprar ", onClick: () => {} },
+          ],
+        }}
       />
     </MenuInvitadoStyle>
   );
