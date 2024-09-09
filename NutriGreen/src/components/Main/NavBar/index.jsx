@@ -51,6 +51,14 @@ function NavBar() {
       to: "/Administracion",
       text: "Administracion",
     },
+    {
+      to: "/MenuCliente",
+      text: "MenuCliente",
+    },
+    {
+      to: "/Login",
+      text: "Login",
+    },
   ];
   return (
     <NavBarStyle>

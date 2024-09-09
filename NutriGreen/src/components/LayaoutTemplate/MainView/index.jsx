@@ -1,19 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import NavBar from "../../Main/NavBar";
-import Footer from "../../../sections/Footer";
+import Footer from "../../../sections/Main/Footer";
 import styled from "@emotion/styled";
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 
 const MainViewStyle = styled.section`
   display: flex;
   flex-direction: column;
   min-height: 95vh;
-  justify-content: center;
-  align-items: center;
 
   & main {
-    flex: 2vmax;
-    padding: 20px;
+    flex: 1;
+    padding: 2vmax;
   }
 
   & footer {

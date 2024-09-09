@@ -1,12 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import * as React from "react";
+import PT from "prop-types";
+import styled from "@emotion/styled";
+import ButtonUsage from "../utils/materialUi";
+import Button from "../components/Main/Button";
+
+const MenuInvitadoStyle = styled.section``;
 
 function MenuInvitado(props) {
-  return (
-    <div>MenuInvitado</div>
-  )
+  return <MenuInvitadoStyle></MenuInvitadoStyle>;
 }
 
-MenuInvitado.propTypes = {}
+MenuInvitado.propTypes = {};
 
-export default MenuInvitado
+export default MenuInvitado;
