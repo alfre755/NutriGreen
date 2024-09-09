@@ -56,6 +56,18 @@ function NavBar() {
       text: "MenuCliente",
     },
     {
+      to: "/Planes",
+      text: "Planes",
+    },
+    {
+      to: "/Productos",
+      text: "Productos",
+    },
+    {
+      to: "/Contactanos",
+      text: "Contactanos",
+    },
+    {
       to: "/Login",
       text: "Login",
     },
