@@ -12,9 +12,9 @@ const ContentWhitImageStyle = styled.section`
     display: flex;
     flex-direction: column;
     flex-basis: 50%;
-    height: 40vh;
     padding: 1em;
     gap: 1em;
+    flex-grow: 1;
 
     > .titulo {
       font-size: 70px;
