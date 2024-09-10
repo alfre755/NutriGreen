@@ -5,7 +5,11 @@ import ContentWhitImage from "../sections/Main/ContentWhitImage";
 import { useNavigate } from "react-router-dom";
 import ListarDocumentosConImagen from "../components/LayaoutTemplate/ListarDocumentosConImagen";
 
-const MenuInvitadoStyle = styled.section``;
+const MenuInvitadoStyle = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 2vmax;
+`;
 
 function MenuInvitado(props) {
   const imageContentWhitImage = <img src="public/evento5_4.jpg" alt="asd" />;
@@ -55,6 +59,16 @@ function MenuInvitado(props) {
       <ListarDocumentosConImagen
         {...{
           title: "Productos Destacados",
+          data: dataExampleListar,
+          buttonConfig: [
+            { type: 1, label: "Ver planes", onClick: () => {} },
+            { type: 1, label: "Ir a comprar ", onClick: () => {} },
+          ],
+        }}
+      />
+      <ListarDocumentosConImagen
+        {...{
+          title: "Promociones Destacadas",
           data: dataExampleListar,
           buttonConfig: [
             { type: 1, label: "Ver planes", onClick: () => {} },
