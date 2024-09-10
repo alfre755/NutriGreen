@@ -70,6 +70,10 @@ function NavBar() {
       text: "Contactanos",
     },
     {
+      to: "/MiPlan",
+      text: "Mi Plan",
+    },
+    {
       to: "/Login",
       text: "Login",
     },
