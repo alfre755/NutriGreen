@@ -3,6 +3,7 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "../utils/theme.config";
 import SimpleRouterApp from "./SimpleRouterApp";
 import MainView from "../components/LayaoutTemplate/MainView";
+import "./App.css";
 
 function App() {
   return (
