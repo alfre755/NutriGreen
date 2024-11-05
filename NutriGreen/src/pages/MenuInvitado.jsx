@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import ContentWhitImage from "../sections/Main/ContentWhitImage";
 import { useNavigate } from "react-router-dom";
 import ListarDocumentosConImagen from "../components/LayaoutTemplate/ListarDocumentosConImagen";
+import AlianzasSection from "../sections/Custom/AlianzasSection";
 
 const MenuInvitadoStyle = styled.section`
   display: flex;
@@ -76,6 +77,7 @@ function MenuInvitado(props) {
           ],
         }}
       />
+      <AlianzasSection />
     </MenuInvitadoStyle>
   );
 }
