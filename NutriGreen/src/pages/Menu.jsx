@@ -1,0 +1,87 @@
+import * as React from "react";
+import PT from "prop-types";
+import styled from "@emotion/styled";
+import ContentWhitImage from "../sections/Main/ContentWhitImage";
+import { useNavigate } from "react-router-dom";
+import ListarDocumentosConImagen from "../components/LayaoutTemplate/ListarDocumentosConImagen";
+import AlianzasSection from "../sections/Custom/AlianzasSection";
+
+const MenuInvitadoStyle = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 2vmax;
+`;
+
+function MenuInvitado(props) {
+  const imageContentWhitImage = <img src="public/evento5_4.jpg" alt="asd" />;
+  const navigate = useNavigate();
+
+  const dataExampleListar = [
+    {
+      _id: "1",
+      title: "Fajita",
+      image: imageContentWhitImage,
+      precio: "$20.000",
+    },
+    {
+      _id: "2",
+      title: "Fajita",
+      image: imageContentWhitImage,
+      precio: "$20.000",
+    },
+    {
+      _id: "3",
+      title: "Fajita",
+      image: imageContentWhitImage,
+      precio: "$20.000",
+    },
+    {
+      _id: "4",
+      title: "Fajita",
+      image: imageContentWhitImage,
+      precio: "$20.000",
+    },
+  ];
+
+  return (
+    <MenuInvitadoStyle>
+      <ContentWhitImage
+        {...{
+          title: "Reduce tu peso en grasa y mejora tu composición corporal",
+          subtitle:
+            "Desarrollamos planes de alimentación saludable en base a tus gustos,objetivo nutricional y te llevamos la comida todos los días a tu casa.Automatiza tu cocina y olvídate de cocinar",
+          image: imageContentWhitImage,
+          buttonConfig: [
+            { type: 1, label: "Ver planes", onClick: () => {} },
+            { type: 1, label: "Ir a comprar ", onClick: () => {} },
+          ],
+        }}
+      />
+      <ListarDocumentosConImagen
+        {...{
+          title: "Productos Destacados",
+          data: dataExampleListar,
+          buttonConfig: [
+            { type: 1, label: "Ver planes", onClick: () => {} },
+            { type: 1, label: "Ir a comprar ", onClick: () => {} },
+          ],
+        }}
+      />
+      <ListarDocumentosConImagen
+        {...{
+          title: "Promociones Destacadas",
+          data: dataExampleListar,
+          buttonConfig: [
+            { type: 1, label: "Ver planes", onClick: () => {} },
+            { type: 1, label: "Ir a comprar ", onClick: () => {} },
+          ],
+        }}
+      />
+      <AlianzasSection />
+    </MenuInvitadoStyle>
+  );
+}
+
+MenuInvitado.propTypes = {};
+
+export default MenuInvitado;
