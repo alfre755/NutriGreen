@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
@@ -23,11 +23,20 @@ const AdministracionStyle = styled.section`
 
 function Administracion(props) {
   const navigate = useNavigate();
+  const [isPopupOpen, setPopupOpen] = useState(false);
+
+  const handleOpenPopup = () => {
+    setPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setPopupOpen(false);
+  };
 
   return (
     <AdministracionStyle>
       <div className="headerWrapper">
-        <p>Administracion</p>
+        <p>Administración</p>
       </div>
       <div className="CRUDWrapper">
         <CRUDSection
@@ -37,16 +46,7 @@ function Administracion(props) {
               {
                 label: "Crear Usuarios",
                 type: 1,
-                onClick: () => {
-                  return (
-                    <Popup
-                      trigger={<button> Trigger</button>}
-                      position="right center"
-                    >
-                      <div>Popup content here !!</div>
-                    </Popup>
-                  );
-                },
+                onClick: handleOpenPopup,
               },
               { label: "Modificar Usuarios", type: 1, onClick: () => {} },
               { label: "Eliminar Usuarios", type: 1, onClick: () => {} },
@@ -77,6 +77,16 @@ function Administracion(props) {
           }}
         />
       </div>
+
+      {/* Popup */}
+      <Popup
+        open={isPopupOpen}
+        onClose={handleClosePopup}
+        position="right center"
+      >
+        <div>Popup content here !!</div>
+        <button onClick={handleClosePopup}>Close</button>
+      </Popup>
     </AdministracionStyle>
   );
 }
