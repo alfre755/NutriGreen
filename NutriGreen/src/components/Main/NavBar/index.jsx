@@ -47,23 +47,20 @@ function NavBar() {
   const objLink = [
     {
       to: "/",
-      text: "MenuInvitado",
+      text: "Menu",
     },
     {
       to: "/Administracion",
       text: "Administracion",
     },
-    {
-      to: "/MenuCliente",
-      text: "MenuCliente",
-    },
+
     {
       to: "/Planes",
       text: "Planes",
     },
     {
-      to: "/Productos",
-      text: "Productos",
+      to: "/Tienda",
+      text: "Tienda",
     },
     {
       to: "/Contactanos",

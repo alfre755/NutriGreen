@@ -3,26 +3,26 @@ import PT from "prop-types";
 import { Route, Routes } from "react-router-dom";
 
 import Administracion from "../pages/Administracion";
-import MenuInvitado from "../pages/MenuInvitado";
-import MenuCliente from "../pages/MenuCliente";
+import Menu from "../pages/Menu";
 import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import Planes from "../pages/Planes";
-import Productos from "../pages/Productos";
+import Tienda from "../pages/Tienda";
 import Contactanos from "../pages/Contactanos";
 import PlanCliente from "../pages/PlanCliente";
+import CategoriaDetalle from "../pages/CategoriaDetalle";
 
 function SimpleRouterApp() {
   return (
     <Routes>
-      <Route path="/" exact element={<MenuInvitado />} />
-      <Route path="/MenuCliente" exact element={<MenuCliente />} />
+      <Route path="/" exact element={<Menu />} />
       <Route path="/Administracion" exact element={<Administracion />} />
       <Route path="/Login" exact element={<Login />} />
       <Route path="/Planes" exact element={<Planes />} />
-      <Route path="/Productos" exact element={<Productos />} />
+      <Route path="/Tienda" exact element={<Tienda />} />
       <Route path="/Contactanos" exact element={<Contactanos />} />
       <Route path="/MiPlan" exact element={<PlanCliente />} />
+      <Route path="/Tienda/:id" element={<CategoriaDetalle />} />
       <Route path="*" exact element={<NotFound />} />
     </Routes>
   );
