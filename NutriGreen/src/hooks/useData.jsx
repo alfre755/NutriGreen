@@ -32,6 +32,7 @@ export default function DataProvider({ children }) {
           _id: `${Math.floor(Math.random() * 1000000000000000)}`,
           nombre: `producto${i}`,
           precio: Math.floor(Math.random() * 10000000),
+          imagen: "/evento5_4.jpg"
         })),
       };
       return data;
