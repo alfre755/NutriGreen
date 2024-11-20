@@ -1,43 +1,72 @@
-import React, { useContext } from "react";
-import { createContext } from "react";
+import React, { createContext, useCallback, useContext } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 
 /**
  * @typedef {Object} ContextDataObject
- * @property {(String)=>Promise<Boolean>} listarProductosPorCategoria
+ * @property {(String)=>Promise<Object|null>} listarProductosPorCategoria
+ * @property {()=>Promise<Object|null>} listarCategorias
  */
 
-// eslint-disable-next-line react-refresh/only-export-components
+// Contexto que compartirá la información en la app
 const ContextData = createContext();
 
 /**
- *Este es un hook que retorna el contexto que se utilizara dentro de la aplicacion(actualmente contiene funciones que buscaran informacion en el backend)
+ * Hook que retorna el contexto utilizado dentro de la aplicación
  * @returns {ContextDataObject}
  */
-// eslint-disable-next-line react-refresh/only-export-components
 export function useData() {
   return useContext(ContextData);
 }
 
-export default function DataProvider({ children }) {
-  const contextData = {
-    listarProductosPorCategoria: async (categoriaId) => {
-      if (categoriaId > 6) return null;
+const API_URL = "http://localhost:3000"; // URL base del backend
 
-      const data = {
-        _id: `${Math.floor(Math.random() * 1000000000000000)}`,
-        nombre: `Nombre de categoria ${categoriaId}`,
-        descripcion:
-          "Ipsum cillum adipisicing elit ex. Sint magna sit dolore nulla et do incididunt mollit. Veniam aute dolor adipisicing aliquip nisi ex adipisicing. Eiusmod veniam sunt adipisicing consequat fugiat ea tempor duis mollit nostrud dolore fugiat. Qui aliquip et quis in enim tempor eu. Aliquip cillum mollit excepteur ea.",
-        productos: [...Array(5)].map((a, i) => ({
-          _id: `${Math.floor(Math.random() * 1000000000000000)}`,
-          nombre: `producto${i}`,
-          precio: Math.floor(Math.random() * 10000000),
-          imagen: "/evento5_4.jpg"
-        })),
+export default function DataProvider({ children }) {
+  const apiKey = localStorage.getItem("API_KEY"); // TODO guardar en localStorage la apikey para seguridad
+
+  const getRequest = useCallback(
+    (key, params) => {
+      return async (payload) => {
+        try {
+          const response = await fetch(`${API_URL}/query`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: apiKey,
+            },
+            body: JSON.stringify({
+              key: key, // El key de la consulta de productos por categoría
+              params: [params], // Los parámetros para la consulta
+              payload,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (result.succes) {
+            return result.data; // Si la consulta fue exitosa, devuelve los productos
+          } else {
+            console.error(`Error en ${key}:`, result.message);
+            return null;
+          }
+        } catch (error) {
+          console.error(`Error al obtener ${key}:`, error);
+          return null; // En caso de error, retorna null
+        }
       };
-      return data;
     },
+    [apiKey]
+  );
+
+  const contextData = {
+    // Función para obtener las categorías desde el backend
+    listarCategorias: getRequest("listarCategorias", []),
+
+    // Función para obtener productos por categoría
+    listarProductosPorCategoria: getRequest("listarProductosPorCategoria"),
+    listarProductos: getRequest("listarProductos", []),
   };
+
   return (
     <ContextData.Provider value={contextData}>{children}</ContextData.Provider>
   );
