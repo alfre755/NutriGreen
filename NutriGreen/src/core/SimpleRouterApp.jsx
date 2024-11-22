@@ -11,6 +11,8 @@ import Tienda from "../pages/Tienda";
 import Contactanos from "../pages/Contactanos";
 import PlanCliente from "../pages/PlanCliente";
 import CategoriaDetalle from "../pages/CategoriaDetalle";
+import ModificarUsuario from "../pages/ModificarUsuario";
+import Eliminar from "../sections/Custom/Eliminar";
 
 function SimpleRouterApp() {
   return (
@@ -23,6 +25,14 @@ function SimpleRouterApp() {
       <Route path="/Contactanos" exact element={<Contactanos />} />
       <Route path="/MiPlan" exact element={<PlanCliente />} />
       <Route path="/Tienda/:id" element={<CategoriaDetalle />} />
+      <Route
+        path="/Administracion/ModificarUsuario/:usuarioId"
+        element={<ModificarUsuario />}
+      />
+      <Route
+        path="/Administracion/EliminarUsuario/:usuarioId"
+        element={<Eliminar />}
+      />
       <Route path="*" exact element={<NotFound />} />
     </Routes>
   );

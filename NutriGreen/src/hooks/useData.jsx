@@ -1,6 +1,4 @@
 import React, { createContext, useCallback, useContext } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
 
 /**
  * @typedef {Object} ContextDataObject
@@ -25,8 +23,8 @@ export default function DataProvider({ children }) {
   const apiKey = localStorage.getItem("API_KEY"); // TODO guardar en localStorage la apikey para seguridad
 
   const getRequest = useCallback(
-    (key, params) => {
-      return async (payload) => {
+    (key, params = []) => {
+      return async (payload = {}) => {
         try {
           const response = await fetch(`${API_URL}/query`, {
             method: "POST",
@@ -36,7 +34,7 @@ export default function DataProvider({ children }) {
             },
             body: JSON.stringify({
               key: key, // El key de la consulta de productos por categoría
-              params: [params], // Los parámetros para la consulta
+              params: [...params], // Los parámetros para la consulta
               payload,
             }),
           });
@@ -59,12 +57,19 @@ export default function DataProvider({ children }) {
   );
 
   const contextData = {
-    // Función para obtener las categorías desde el backend
+    //Peticiones de categorias
     listarCategorias: getRequest("listarCategorias", []),
 
-    // Función para obtener productos por categoría
+    //Peticiones de productos
     listarProductosPorCategoria: getRequest("listarProductosPorCategoria"),
     listarProductos: getRequest("listarProductos", []),
+
+    //Peticiones de usuarios
+    listarUsuarios: getRequest("listarUsuarios", []),
+    crearUsuario: getRequest("crearUsuario", []),
+    modificarUsuario: getRequest("modificarUsuario", []),
+    eliminarUsuario: getRequest("eliminarUsuario", []),
+    obtenerUsuario: getRequest("obtenerUsuario", ["usuario_id"]),
   };
 
   return (
