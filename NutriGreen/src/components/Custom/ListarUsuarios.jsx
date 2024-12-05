@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useData } from "../../hooks/useData";
-import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
+import { usePopup } from "../../hooks/UsePopUp";
+import UsuarioEliminarForm from "./UsuarioEliminarForm";
+import UsuarioModificarForm from "./UsuarioModificarForm";
 
 const ListarUsuariosStyle = styled.div``;
 
-function ListarUsuarios({ accion, ruta }) {
+function ListarUsuarios({ accion }) {
   const navigate = useNavigate();
   const { listarUsuarios } = useData(); // Hook para obtener la función de listar usuarios
   const [usuarios, setUsuarios] = useState([]); // Estado para los usuarios
   const [loading, setLoading] = useState(true); // Estado de carga
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null); // Usuario seleccionado para edición
+  const { showPopUp, hidePopUp } = usePopup();
 
   useEffect(() => {
     const cargarUsuarios = async () => {
@@ -33,9 +35,23 @@ function ListarUsuarios({ accion, ruta }) {
     cargarUsuarios();
   }, [listarUsuarios]);
 
-  const handleEditarClick = (usuario) => {
+  const handleActionClick = (usuario) => {
     setUsuarioSeleccionado(usuario); // Guardar usuario seleccionado
-    navigate(`/Administracion/${ruta}/${usuario.usuario_id}`);
+    console.log("Usuario seleccionado:", usuario);
+
+    if (accion === "Eliminar") {
+      showPopUp(
+        <UsuarioEliminarForm {...{ usuario: usuario, onCancel: hidePopUp }} />
+      );
+    } else if (accion === "Editar") {
+      showPopUp(
+        <UsuarioModificarForm
+          {...{ usuarioId: usuario.usuario_id, onCancel: hidePopUp }}
+        />
+      );
+    } else {
+      navigate(`/Administracion/${usuario.id}`);
+    }
   };
 
   if (loading) {
@@ -67,7 +83,7 @@ function ListarUsuarios({ accion, ruta }) {
               <td>{usuario.correo_electronico}</td>
               <td>{usuario.tipo_usuario}</td>
               <td>
-                <button onClick={() => handleEditarClick(usuario)}>
+                <button onClick={() => handleActionClick(usuario)}>
                   {accion}
                 </button>
               </td>
