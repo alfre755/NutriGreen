@@ -87,7 +87,7 @@ function CategoriaDetalle() {
 
   useEffect(() => {
     async function fetchProductos() {
-      const productos = await data.listarProductosPorCategoria(id);
+      const productos = await data.listarProductos();
       setDataCategoria(productos);
     }
     fetchProductos();
