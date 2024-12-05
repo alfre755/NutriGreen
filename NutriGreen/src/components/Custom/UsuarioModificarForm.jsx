@@ -10,8 +10,9 @@ const UsuarioModificarFormStyle = styled.div`
   }
 `;
 
-function UsuarioModificarForm({ usuarioId, onClose }) {
+function UsuarioModificarForm({ usuarioId, onCancel }) {
   const { obtenerUsuario, modificarUsuario } = useData();
+  console.log(usuarioId);
 
   // Estado del formulario inicializado con valores vacíos
   const { formState, onInputChange, setFormState } = useForm({
@@ -72,7 +73,7 @@ function UsuarioModificarForm({ usuarioId, onClose }) {
 
       if (response) {
         alert("Usuario modificado exitosamente.");
-        onClose(); // Cerrar el formulario después de modificar
+        onCancel(); // Cerrar el formulario después de modificar
       } else {
         alert("Hubo un error al modificar el usuario.");
       }
@@ -125,7 +126,7 @@ function UsuarioModificarForm({ usuarioId, onClose }) {
 
         <div>
           <button type="submit">Guardar Cambios</button>
-          <button type="button" onClick={onClose}>
+          <button type="button" onClick={onCancel}>
             Cancelar
           </button>
         </div>
@@ -136,7 +137,7 @@ function UsuarioModificarForm({ usuarioId, onClose }) {
 
 UsuarioModificarForm.propTypes = {
   usuarioId: PropTypes.number.isRequired, // ID del usuario a modificar
-  onClose: PropTypes.func.isRequired, // Callback para cerrar el formulario
+  onCancel: PropTypes.func.isRequired, // Callback para cerrar el formulario
 };
 
 export default UsuarioModificarForm;
