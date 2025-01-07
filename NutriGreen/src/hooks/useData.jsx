@@ -2,8 +2,21 @@ import React, { createContext, useCallback, useContext } from "react";
 
 /**
  * @typedef {Object} ContextDataObject
- * @property {(String)=>Promise<Object|null>} listarProductosPorCategoria
  * @property {()=>Promise<Object|null>} listarCategorias
+ * @property {(Object)=>Promise<Object|null>} crearCategoria
+ * @property {(Object)=>Promise<Object|null>} modificarCategoria
+ * @property {(Number)=>Promise<Object|null>} eliminarCategoria
+ * @property {(Number)=>Promise<Object|null>} obtenerCategoria
+ * @property {()=>Promise<Object|null>} listarProductos
+ * @property {(Object)=>Promise<Object|null>} crearProducto
+ * @property {(Object)=>Promise<Object|null>} modificarProducto
+ * @property {(Number)=>Promise<Object|null>} eliminarProducto
+ * @property {(Number)=>Promise<Object|null>} obtenerProducto
+ * @property {()=>Promise<Object|null>} listarUsuarios
+ * @property {(Object)=>Promise<Object|null>} crearUsuario
+ * @property {(Object)=>Promise<Object|null>} modificarUsuario
+ * @property {(Number)=>Promise<Object|null>} eliminarUsuario
+ * @property {(Number)=>Promise<Object|null>} obtenerUsuario
  */
 
 // Contexto que compartirá la información en la app
@@ -20,9 +33,18 @@ export function useData() {
 const API_URL = "http://localhost:3000"; // URL base del backend
 
 export default function DataProvider({ children }) {
-  const apiKey = localStorage.getItem("API_KEY"); // TODO guardar en localStorage la apikey para seguridad
+  const apiKey = localStorage.getItem("API_KEY"); // TODO: guardar en localStorage la apikey para seguridad
+  console.log(apiKey);
+ 
 
-  const getRequest = useCallback(
+  
+
+  /**
+   * Realiza una petición con formato JSON.
+   * @param {string} key - La clave de la operación.
+   * @param {Array} params - Parámetros adicionales.
+   */
+  const jsonRequest = useCallback(
     (key, params = []) => {
       return async (payload = {}) => {
         try {
@@ -32,24 +54,65 @@ export default function DataProvider({ children }) {
               "Content-Type": "application/json",
               Authorization: apiKey,
             },
-            body: JSON.stringify({
-              key: key, // El key de la consulta de productos por categoría
-              params: [...params], // Los parámetros para la consulta
-              payload,
-            }),
+            body: JSON.stringify({ key, params, payload }),
           });
 
-          const result = await response.json();
-
-          if (result.succes) {
-            return result.data; // Si la consulta fue exitosa, devuelve los productos
-          } else {
-            console.error(`Error en ${key}:`, result.message);
+          if (!response.ok) {
+            console.error(`Error en la consulta: Estado ${response.status}`);
             return null;
           }
+
+          const result = await response.json();
+          console.log(result);
+
+          return result.data !== undefined ? result.data : true;
         } catch (error) {
           console.error(`Error al obtener ${key}:`, error);
-          return null; // En caso de error, retorna null
+          return null;
+        }
+      };
+    },
+    [apiKey]
+  );
+
+  /**
+   * Realiza una petición con formato FormData.
+   * @param {string} key - La clave de la operación.
+   * @param {Array} params - Parámetros adicionales.
+   */
+  const formDataRequest = useCallback(
+    (key, params = []) => {
+      return async (payload = {}, file = null) => {
+        try {
+          const formData = new FormData();
+          formData.append("key", key);
+          formData.append("params", JSON.stringify(params));
+          formData.append("payload", JSON.stringify(payload));
+
+          if (file) {
+            formData.append("imagen", file);
+          }
+
+          const response = await fetch(`${API_URL}/query`, {
+            method: "POST",
+            headers: {
+              Authorization: apiKey,
+            },
+            body: formData,
+          });
+
+          if (!response.ok) {
+            console.error(`Error en la consulta: Estado ${response.status}`);
+            return null;
+          }
+
+          const result = await response.json();
+          console.log(result);
+
+          return result.data !== undefined ? result.data : true;
+        } catch (error) {
+          console.error(`Error al obtener ${key}:`, error);
+          return null;
         }
       };
     },
@@ -57,19 +120,26 @@ export default function DataProvider({ children }) {
   );
 
   const contextData = {
-    //Peticiones de categorias
-    listarCategorias: getRequest("listarCategorias", []),
+    // Peticiones de categorías
+    listarCategorias: jsonRequest("listarCategorias"),
+    crearCategoria: formDataRequest("crearCategoria"), // Ahora usa formDataRequest
+    modificarCategoria: jsonRequest("modificarCategoria"),
+    eliminarCategoria: jsonRequest("eliminarCategoria"),
+    obtenerCategoria: jsonRequest("obtenerCategoria", ["categoria_id"]),
 
-    //Peticiones de productos
-    listarProductosPorCategoria: getRequest("listarProductosPorCategoria"),
-    listarProductos: getRequest("listarProductos", []),
+    // Peticiones de productos
+    listarProductos: jsonRequest("listarProductos"),
+    crearProducto: jsonRequest("crearProducto"),
+    modificarProducto: jsonRequest("modificarProducto"),
+    eliminarProducto: jsonRequest("eliminarProducto"),
+    obtenerProducto: jsonRequest("obtenerProducto", ["producto_id"]),
 
-    //Peticiones de usuarios
-    listarUsuarios: getRequest("listarUsuarios", []),
-    crearUsuario: getRequest("crearUsuario", []),
-    modificarUsuario: getRequest("modificarUsuario", []),
-    eliminarUsuario: getRequest("eliminarUsuario", []),
-    obtenerUsuario: getRequest("obtenerUsuario", ["usuario_id"]),
+    // Peticiones de usuarios
+    listarUsuarios: jsonRequest("listarUsuarios"),
+    crearUsuario: jsonRequest("crearUsuario"),
+    modificarUsuario: jsonRequest("modificarUsuario"),
+    eliminarUsuario: jsonRequest("eliminarUsuario"),
+    obtenerUsuario: jsonRequest("obtenerUsuario", ["usuario_id"]),
   };
 
   return (

@@ -1,27 +1,44 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import CRUDComponent from "../../components/Custom/CRUDComponent"; // Este componente debería ser reutilizable
 import { usePopup } from "../../hooks/UsePopUp";
 import ProductoAgregarForm from "../../components/Custom/ProductoAgregarForm"; // Aquí es el formulario para agregar productos
 import ListarProductos from "../../components/Custom/ListarProductos"; // Aquí es la lista para los productos
+import { useData } from "../../hooks/useData";
 
 const ProductosCRUDSectionStyle = styled.section``;
 
 function ProductosCRUDSection() {
+  const { listarCategorias } = useData();
   const { showPopUp } = usePopup();
+  const [categorias, setCategorias] = useState([]);
+
+  useEffect(() => {
+    const fetchCategorias = async () => {
+      try {
+        const categoriasData = await listarCategorias();
+        console.log("Datos de categorías recibidos:", categoriasData); // Depuración
+        setCategorias(categoriasData);
+      } catch (error) {
+        console.error("Error al obtener categorías:", error);
+      }
+    };
+
+    fetchCategorias();
+  }, [listarCategorias]);
 
   // Función para mostrar el formulario de agregar producto
   const popUpAgregarProducto = useCallback(() => {
-    showPopUp(<ProductoAgregarForm />);
+    showPopUp(<ProductoAgregarForm {...{ categorias }} />);
     return true;
-  }, [showPopUp]);
+  }, [categorias, showPopUp]);
 
   // Función para mostrar el formulario de editar producto
   const popUpModificarProducto = useCallback(() => {
-    showPopUp(<ListarProductos {...{ accion: "Editar" }} />);
+    showPopUp(<ListarProductos {...{ accion: "Editar",categorias:categorias }} />);
     return true;
-  }, [showPopUp]);
+  }, [categorias, showPopUp]);
 
   // Función para mostrar el formulario de eliminar producto
   const popUpEliminarProducto = useCallback(() => {

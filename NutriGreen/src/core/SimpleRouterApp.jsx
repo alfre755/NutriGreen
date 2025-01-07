@@ -12,6 +12,7 @@ import Contactanos from "../pages/Contactanos";
 import PlanCliente from "../pages/PlanCliente";
 import CategoriaDetalle from "../pages/CategoriaDetalle";
 import UsuarioDetalle from "../pages/UsuarioDetalle";
+import ProductoDetalle from "../pages/ProductoDetalle";
 
 function SimpleRouterApp() {
   return (
@@ -25,6 +26,7 @@ function SimpleRouterApp() {
       <Route path="/MiPlan" exact element={<PlanCliente />} />
       <Route path="/Tienda/:id" element={<CategoriaDetalle />} />
       <Route path="/Administracion/:id" element={<UsuarioDetalle />} />
+      <Route path="/Administracion/:id" element={<ProductoDetalle />} />
       <Route path="*" exact element={<NotFound />} />
     </Routes>
   );

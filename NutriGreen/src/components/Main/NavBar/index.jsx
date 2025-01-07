@@ -12,7 +12,7 @@ const NavBarStyle = styled.section`
     align-items: center;
     color: ${({ theme }) => theme.colors.BW1};
     padding: 0.5em;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    /* text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); */
     background-color: ${({ theme }) => theme.colors.primary};
     z-index: 99999;
     width: calc(100% - 0.5em * 2);

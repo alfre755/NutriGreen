@@ -70,12 +70,15 @@ function UsuarioModificarForm({ usuarioId, onCancel }) {
 
     try {
       const response = await modificarUsuario(payload);
+      console.log(response);
+      
 
       if (response) {
         alert("Usuario modificado exitosamente.");
         onCancel(); // Cerrar el formulario después de modificar
       } else {
         alert("Hubo un error al modificar el usuario.");
+        onCancel(); // Cerrar el formulario después de modificars
       }
     } catch (error) {
       console.error("Error al modificar el usuario:", error);

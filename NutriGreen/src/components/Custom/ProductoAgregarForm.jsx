@@ -1,24 +1,57 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
+import { useForm } from "../../hooks/useForm";
+import { useData } from "../../hooks/useData";
 
-function ProductoAgregarForm({ productoId, onCancel }) {
-  const [formState, setFormState] = useState({
+function ProductoAgregarForm({ categorias }) {
+  const { crearProducto } = useData(); // Función para enviar los datos al backend
+
+  const {
+    formState,
+    onInputChange,
+    onResetForm,
+    nombre,
+    descripcion,
+    precio,
+    stock,
+    categoria_id,
+  } = useForm({
     nombre: "",
     descripcion: "",
     precio: "",
     stock: "",
+    categoria_id: "",
   });
 
-  // Lógica para cargar datos de un producto si es que se está editando
-  useEffect(() => {
-    if (productoId) {
-      // Lógica para cargar el producto desde la base de datos o API
-    }
-  }, [productoId]);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Lógica para enviar datos del formulario al backend
+
+    // Crear el payload para enviar al backend
+    const payload = {
+      nombre,
+      descripcion,
+      precio: parseInt(precio, 10),
+      stock: parseInt(stock, 10),
+      categoria_id: parseInt(categoria_id, 10),
+    };
+
+    console.log("Enviando datos al backend:", payload);
+
+    try {
+      const response = await crearProducto(payload);
+
+      if (response) {
+        alert("Producto creado exitosamente.");
+        onResetForm(); // Limpiar el formulario
+      } else {
+        alert("Hubo un error al crear el producto.");
+      }
+    } catch (error) {
+      console.error("Error al crear el producto:", error);
+      alert(
+        "Error al enviar los datos. Revisa la consola para más información."
+      );
+    }
   };
 
   return (
@@ -29,19 +62,20 @@ function ProductoAgregarForm({ productoId, onCancel }) {
           type="text"
           id="nombre"
           name="nombre"
-          value={formState.nombre}
-          onChange={(e) => setFormState({ ...formState, nombre: e.target.value })}
+          value={nombre}
+          onChange={onInputChange}
+          required
         />
       </div>
 
       <div>
         <label htmlFor="descripcion">Descripción:</label>
-        <input
-          type="text"
+        <textarea
           id="descripcion"
           name="descripcion"
-          value={formState.descripcion}
-          onChange={(e) => setFormState({ ...formState, descripcion: e.target.value })}
+          value={descripcion}
+          onChange={onInputChange}
+          required
         />
       </div>
 
@@ -51,8 +85,10 @@ function ProductoAgregarForm({ productoId, onCancel }) {
           type="number"
           id="precio"
           name="precio"
-          value={formState.precio}
-          onChange={(e) => setFormState({ ...formState, precio: e.target.value })}
+          value={precio}
+          onChange={onInputChange}
+          step="0.01"
+          required
         />
       </div>
 
@@ -62,22 +98,42 @@ function ProductoAgregarForm({ productoId, onCancel }) {
           type="number"
           id="stock"
           name="stock"
-          value={formState.stock}
-          onChange={(e) => setFormState({ ...formState, stock: e.target.value })}
+          value={stock}
+          onChange={onInputChange}
+          required
         />
       </div>
 
       <div>
+        <label htmlFor="categoria_id">Categoría:</label>
+        <select
+          id="categoria_id"
+          name="categoria_id"
+          value={categoria_id}
+          onChange={onInputChange}
+          required
+        >
+          <option value="">Seleccione una categoría</option>
+          {categorias.map(({ categoria_id, nombre }) => (
+            <option key={categoria_id} value={categoria_id}>
+              {nombre}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
         <button type="submit">Guardar Producto</button>
-        <button type="button" onClick={onCancel}>Cancelar</button>
+        <button type="button" onClick={onResetForm}>
+          Limpiar
+        </button>
       </div>
     </form>
   );
 }
 
 ProductoAgregarForm.propTypes = {
-  productoId: PropTypes.number,
-  onCancel: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func,
 };
 
 export default ProductoAgregarForm;

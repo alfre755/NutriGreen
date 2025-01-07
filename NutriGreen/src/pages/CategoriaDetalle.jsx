@@ -101,7 +101,7 @@ function CategoriaDetalle() {
     );
   }
   const { productos = [] } = dataCategoria;
-  console.log(dataCategoria);
+  console.log(dataCategoria.nombre);
 
   return (
     <CategoriaDetalleStyle>

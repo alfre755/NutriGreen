@@ -79,7 +79,7 @@ function UsuarioAgregarForm(props) {
         <label htmlFor="contraseña">Contraseña:</label>
         <input
           type="password"
-          id="contraseña"
+          id="contraseñaUsuario"
           name="contraseña"
           value={contraseña}
           onChange={onInputChange}

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import UsuariosCRUDSection from "../sections/Custom/UsuariosCRUDSection";
 import ProductosCRUDSection from "../sections/Custom/ProductosCRUDSection";
+import CategoriasCRUDSection from "../sections/Custom/CategoriasCRUDSection";
 
 const AdministracionStyle = styled.section`
   display: flex;
@@ -16,6 +17,7 @@ const AdministracionStyle = styled.section`
 
   > .CRUDWrapper {
     display: flex;
+    gap: 20px;
   }
 `;
 
@@ -30,8 +32,8 @@ function Administracion(props) {
         <UsuariosCRUDSection />
         {/* CRUD Productos */}
         <ProductosCRUDSection />
-
-        {/* CRUD Planes */}
+        {/* CRUD Categorias */}
+        <CategoriasCRUDSection />
       </div>
     </AdministracionStyle>
   );

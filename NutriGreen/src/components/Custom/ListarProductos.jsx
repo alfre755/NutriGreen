@@ -10,7 +10,7 @@ import ProductoModificarForm from "./ProductoModificarForm";
 
 const ListarProductosStyle = styled.div``;
 
-function ListarProductos({ accion }) {
+function ListarProductos({ accion,categorias }) {
   const navigate = useNavigate();
   const { listarProductos } = useData(); // Hook para obtener la función de listar productos
   const [productos, setProductos] = useState([]); // Estado para los productos
@@ -47,7 +47,7 @@ function ListarProductos({ accion }) {
     } else if (accion === "Editar") {
       showPopUp(
         <ProductoModificarForm
-          {...{ productoId: producto.producto_id, onCancel: hidePopUp }}
+          {...{ productoId: producto.producto_id, onCancel: hidePopUp,categorias:categorias }}
         />
       );
     } else {
@@ -74,6 +74,7 @@ function ListarProductos({ accion }) {
             <th>Descripción</th>
             <th>Precio</th>
             <th>Stock</th>
+            <th>Categoria</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -85,6 +86,7 @@ function ListarProductos({ accion }) {
               <td>{producto.descripcion}</td>
               <td>{producto.precio}</td>
               <td>{producto.stock}</td>
+              <td>{producto.categoria_id}</td>
               <td>
                 <button onClick={() => handleActionClick(producto)}>
                   {accion}

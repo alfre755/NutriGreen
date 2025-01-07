@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const ListarCategoriasStyle = styled.section`
   display: flex;
   flex-direction: column;
-  padding: 100px 100px 100px;
+  padding: 50px 50px 50px;
 
   > .headerWrapper {
     display: flex;
@@ -14,7 +14,7 @@ const ListarCategoriasStyle = styled.section`
     justify-content: center;
 
     > h1 {
-      font-size: 28px;
+      font-size: 35px;
     }
   }
 
@@ -67,14 +67,14 @@ function ListarCategorias({ title, categorias }) {
         <h1>{title}</h1>
       </div>
       <div className="contentWrapper">
-        {categorias.map(({ title, id, imagen }) => (
+        {categorias.map(({ nombre, categoria_id, imagen }) => (
           <div
             className="categoriaCard"
-            key={id}
-            onClick={() => handleCategoria(id)}
-            style={{ backgroundImage: `url(${imagen})` }}
+            key={categoria_id}
+            onClick={() => handleCategoria(categoria_id)}
+            style={{ backgroundImage: `url(http://localhost:3000${imagen})` }}
           >
-            <h2>{title}</h2>
+            <h2>{nombre}</h2>
           </div>
         ))}
       </div>
@@ -86,7 +86,7 @@ ListarCategorias.propTypes = {
   title: PropTypes.string.isRequired,
   categorias: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      categoria_id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       imagen: PropTypes.string.isRequired,
     })
