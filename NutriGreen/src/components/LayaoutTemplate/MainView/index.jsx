@@ -11,7 +11,6 @@ import "@fontsource/roboto/700.css";
 const MainViewStyle = styled.section`
   display: flex;
   flex-direction: column;
-
   min-height: 100vh; /* Asegura que el contenedor ocupe todo el alto de la ventana */
 
   * {

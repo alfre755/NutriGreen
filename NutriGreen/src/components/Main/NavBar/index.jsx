@@ -16,6 +16,8 @@ const NavBarStyle = styled.section`
     background-color: ${({ theme }) => theme.colors.primary};
     z-index: 99999;
     width: calc(100% - 0.5em * 2);
+    height: 55px;
+    max-height: 55px;
   }
 
   .link-wrapper {
